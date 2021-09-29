@@ -1,0 +1,30 @@
+package assignment1;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+public class Act1 {
+	public static void main(String[] args) throws Exception
+	{
+		Scanner sc=new Scanner(System.in);         //object of Scanner class  
+		//System.out.print("Enter the file name: ");  
+		//String name=sc.nextLine();              //variable name to store the file name  
+		FileOutputStream fos=new FileOutputStream("C:\\Users\\lenovo\\java\\Batch.txt", true);  // true for append mode  
+		System.out.print("Enter file content: ");
+		String str=sc.nextLine();      //str stores the string which we have entered  
+		byte[] b= str.getBytes();       //converts string into bytes  
+		fos.write(b);           //writes bytes into file  
+		fos.close();            //close the file  
+		System.out.println("file saved."); 
+	
+
+}}
+
+	

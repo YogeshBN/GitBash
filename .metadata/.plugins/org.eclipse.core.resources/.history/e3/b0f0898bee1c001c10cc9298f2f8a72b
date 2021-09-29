@@ -1,0 +1,60 @@
+package assignment1;
+import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+
+public class Apple2
+{
+	public static void main(String[] args) throws Throwable
+	{
+		PrintWriter pw = new PrintWriter("C:\\Users\\lenovo\\Desktop\\Act\\Movies.csv");
+		StringBuilder s = new StringBuilder();
+		
+		s.append("Movies_names");
+		s.append(",");
+		s.append("Hero_names");
+		s.append(",");
+		s.append("Heroine_names");
+		s.append("\n");
+		
+		s.append("Veeram");
+		s.append(",");
+		s.append("Ajith");
+		s.append(",");
+		s.append("Tamana");
+		s.append("\n");
+		
+		s.append("Sulthan");
+		s.append(",");
+		s.append("Karthi");
+		s.append(",");
+		s.append("Rashmika");
+		s.append("\n");
+		
+		s.append("Vaalu");
+		s.append(",");
+		s.append("STR");
+		s.append(",");
+		s.append("Hansika");
+		s.append("\n");
+		
+		s.append("Boys");
+		s.append(",");
+		s.append("Siddharth");
+		s.append(",");
+		s.append("Jenelia");
+		s.append("\n");
+		
+		s.append("vaali");
+		s.append(",");
+		s.append("Ajith");
+		s.append(",");
+		s.append("Simran");
+		s.append("\n");
+		
+		pw.write(s.toString());
+		pw.close();
+		System.out.println("Finished");
+	}}

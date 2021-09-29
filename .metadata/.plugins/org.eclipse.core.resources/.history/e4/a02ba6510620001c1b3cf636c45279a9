@@ -1,0 +1,58 @@
+public class CDItem implements Comparable<CDItem>{
+    String title;
+    String singer;
+    double price;
+
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getSinger() {
+        return singer;
+    }
+    public void setSinger(String singer) {
+        this.singer = singer;
+    }
+    public double getPrice() {
+        return price;
+    }
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    CDItem(String title, String singer, double price){
+        this.title=title;
+        this.singer=singer;
+        this.price=price;
+    }
+
+    @Override
+    public int compareTo(CDItem item){
+        return this.title.compareTo(item.title);
+    }
+}
+
+public class CDCollection{
+    List<CDItem> list=new ArrayList<CDItem>();
+
+    public void addCD(String title, String singer, double price){
+        CDItem item=new CDItem(title, singer, price);
+        list.add(item);
+    }
+
+    public String toString(){
+        String result="";
+        for(int i=0; i<list.size(); i++){
+            CDItem item=(CDItem)list.get(i);
+            result=result + "|" + item.getTitle(); 
+        }
+
+        return result;
+    }
+
+    public void sort(){
+        Collections.sort(list);
+    }
+}

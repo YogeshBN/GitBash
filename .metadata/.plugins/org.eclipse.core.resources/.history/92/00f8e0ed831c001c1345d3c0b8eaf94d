@@ -1,0 +1,22 @@
+package assignment1;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+public class Act1 {
+	public static void main(String[] args) throws Exception
+	{
+		Scanner sc=new Scanner(System.in); 
+		FileOutputStream fos=new FileOutputStream("C:\\Users\\lenovo\\java\\Batch.txt", true);  
+		System.out.print("Enter file content: ");
+		String str=sc.nextLine();     
+		byte[] b= str.getBytes();     
+		fos.write(b);             
+		fos.close();      
+		System.out.println("file saved."); 
+	
+
+}}
+
+	

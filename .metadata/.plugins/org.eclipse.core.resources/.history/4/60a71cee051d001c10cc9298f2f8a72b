@@ -1,0 +1,49 @@
+package myproject;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Map2 {
+
+	public static void main(String[] args) {
+		//key=>string,value=>double
+		HashMap<String,Double> obj=new HashMap<String,Double>();
+		//no add method in Map interface
+
+		obj.put("Devi",43343.434);//name(key),salary(value)
+		obj.put("Abi",43434.434);
+		obj.put("Daya",43436.434);
+		obj.put(null,4343.434);//one null key is allowed in MAP 
+		//obj.put(545,43434.434);//invalid
+		obj.put("Priya",43443.434);
+		obj.put("Priya",88654.787);//keys cannot be duplicated
+		obj.put("Priya",83454.787);//keys cannot be duplicated
+	
+		System.out.println("HashMap(Unordered):: "+obj.toString());//both key and value!
+		System.out.println("HashMap(Size):: "+obj.size());
+		
+		//display keys
+		for(String s:obj.keySet())
+		{
+					System.out.println("Key:: "+s);
+		}
+		//display values
+		for(Double d1:obj.values())
+		{
+			System.out.println("Value:: "+d1);
+		}
+		Double b1=obj.get("aaa");	
+		obj.put("Devi", b1+20000);
+		System.out.println("After Update:: "+obj.get("aaa"));
+
+
+		for(Map.Entry<String, Double> s1: obj.entrySet())
+		{
+			System.out.println("Key&Value:: "+s1.getKey() + " "+s1.getValue());
+		}
+		obj.remove("Priya");
+		System.out.println("After Remove:: "+obj.toString());
+
+
+	}
+
+}

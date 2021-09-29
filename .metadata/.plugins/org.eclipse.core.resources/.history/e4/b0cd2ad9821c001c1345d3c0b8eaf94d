@@ -1,0 +1,45 @@
+package assignment1;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+
+public class Act1 {
+	public static void main(String[] args) throws Exception
+	{
+	//File f1=new File("C:\\Users\\lenovo\\java\\Batch.txt");
+	//f1.createNewFile();
+		FileOutputStream obj=new FileOutputStream("C:\\Users\\lenovo\\java\\Batch.txt");
+		String str="Good Morning!";
+		obj.write(str.getBytes());//convert String to bytes
+		System.out.println("File Created and Data Written into file!");
+		obj.close();//closing the write mode!
+		
+		//Read Operation
+		File f1=new File("C:\\Users\\lenovo\\java\\Batch.txt");
+		if(!f1.exists() || f1.length()<0)
+		{
+			System.out.println("File Not Exists! File Empty!");
+		}
+		else
+		{
+			FileInputStream f4=new FileInputStream(f1);//Object of File Class
+			int i;//bcos it is a ByteStream
+			while((i=f4.read())!=-1)//UNTIL IT REACHES END OF FILE(EOF)
+			{
+				System.out.print((char)i);
+			}
+			f4.close();//closing the stream!!!!!!!!!!!!!!!!!!
+		}
+			
+
+	
+
+}}
+
+	

@@ -1,0 +1,27 @@
+package assignment1;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+public class Act1 {
+	public static void main(String[] args) throws Exception
+	{            
+		FileOutputStream fos=new FileOutputStream("C:\\Users\\lenovo\\java\\Batch.txt", true);  // true for append mode  
+		System.out.print("Enter file content: ");         
+		String str=sc.nextLine()+"\n";      //str stores the string which we have entered  
+		byte[] b= str.getBytes();       //converts string into bytes  
+		fos.write(b);           //writes bytes into file  
+		fos.close();            //close the file  
+		System.out.println("file saved."); 
+	
+
+}}
+
+	

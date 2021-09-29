@@ -1,0 +1,33 @@
+package assignment1;
+import java.util.*;  
+class Tele {    
+String name;  
+int number;  
+public Tele(String name,int number ) {
+
+    this.name = name;  
+    this.number = number;  
+     
+}  
+}  
+public class Telephone{  
+public static void main(String[] args) {  
+    HashSet<Tele> set=new HashSet<Tele>();  
+    
+    Tele b1=new Tele("Ajay",4354353);
+    Tele b2=new Tele("Ram",343353245);
+    Tele b3=new Tele("siva",97584454);
+    Tele b4=new Tele("Raj",4544535);
+    Tele b5=new Tele("Kumar",64564556);
+   
+    set.add(b1);  
+    set.add(b2);  
+    set.add(b3);
+    set.add(b4);
+    set.add(b5);
+     
+    for(Tele b:set){  
+    System.out.println(b.name+" "+b.number);  
+    }  
+}  
+}

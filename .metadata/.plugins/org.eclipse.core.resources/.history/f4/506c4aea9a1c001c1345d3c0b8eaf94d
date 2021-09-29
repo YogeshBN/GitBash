@@ -1,0 +1,39 @@
+package assignment1;
+
+import java.util.*;
+public class Act7{
+    public static void main(String[] args) {
+        Queue<Integer> q1 = new LinkedList<Integer>();
+        //Add elements to the Queue
+        q1.add(1);
+        q1.add(2);
+        q1.add(3);
+        q1.add(4);
+        q1.add(6);
+        q1.add(7);
+        q1.add(8);
+        q1.add(9);
+        q1.add(10);
+        q1.add(11);
+        q1.add(12);
+        
+        System.out.println("Elements in Queue:"+q1);
+        //remove () method =>removes first element from the queue
+        
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        System.out.println("Element removed from the queue: "+q1.remove());
+        
+        
+        
+    }
+}

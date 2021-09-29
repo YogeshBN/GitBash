@@ -1,0 +1,40 @@
+package assignment1;
+
+public class Actstring1 {
+	public static void main(String[] args) 
+	{
+		String lang="The quick brown fox jumps over the lazy dog";
+		//System.out.println("Indexof()::"+lang.indexOf(13));
+		System.out.println("Indexof()::"+lang.charAt(12));
+		System.out.println("Indexof()::"+lang.lastIndexOf("is"));
+		System.out.println("Indexof()::" + "and killed it");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

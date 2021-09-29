@@ -1,0 +1,58 @@
+package assignment1;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Scanner;
+
+import static java.lang.System.*;
+class employee implements Serializable
+		{
+			
+			int empid;
+			String ename;
+			float sal;
+			public employee(int empid, String ename, float sal) {
+				super();
+				this.empid = empid;
+				this.ename = ename;
+				this.sal = sal;
+			}
+			
+			@Override
+			public String toString() {
+				return "employee [empid=" + empid + ", ename=" + ename + ", sal=" + sal + "]";
+			}	
+		}
+		public class Act3
+		{
+			public static void main(String[] args) throws Exception
+			{
+				out.println("Enter the below details");
+				Scanner sc=new Scanner(System.in);
+				out.println("Enter the employee id");
+				int e1=sc.nextInt();
+				out.println("Enter the employee name");
+				String e2=sc.next();
+				out.println("Enter the employee salary");
+				float e3=sc.nextFloat();		
+				FileOutputStream obj=new FileOutputStream("C:\\Users\\lenovo\\Java File concept\\Employee.ser");
+				ObjectOutputStream obj1=new ObjectOutputStream(obj);
+				obj1.writeObject(e1);
+				obj1.writeObject(e2);
+				obj1.writeObject(e3);
+				
+				System.out.println("Book Data Serialized or Persisted!");		
+				obj1.close();
+				FileInputStream obj2=new FileInputStream("C:\\Assign\\Employee.ser");
+				ObjectInputStream b12=new ObjectInputStream(obj2);
+				employee b6;
+				while(obj2.available() != 0)
+				{
+					b6 = (employee) b12.readObject();
+					System.out.println("Data Deserialized:: "+b6.toString());
+				}
+				b12.close();
+				}
+		}

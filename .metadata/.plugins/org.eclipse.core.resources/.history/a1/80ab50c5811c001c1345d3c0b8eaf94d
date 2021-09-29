@@ -1,0 +1,33 @@
+package assignment1;
+import java.io.File;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+
+public class Act1 {
+	public static void main(String[] args) throws Exception
+	{
+	//File f1=new File("C:\\Users\\lenovo\\java\\Batch.txt");
+	//f1.createNewFile();
+	InputStreamReader obj=new InputStreamReader(System.in);//similar to Scanner class
+	BufferedReader b1=new BufferedReader(obj);
+	System.out.println("Name::: ");
+	String i=b1.readLine();
+	FileWriter fw=new FileWriter("C:\\Users\\lenovo\\java\\Batch.txt",true);
+	BufferedWriter bw=new BufferedWriter(fw);
+	bw.write(i);
+	FileReader fr=new FileReader("C:\\Users\\lenovo\\java\\Batch.txt");
+	BufferedReader br=new BufferedReader(fr);	
+	String res;
+	while((res=br.readLine())!=null)
+	{
+		System.out.println("After Read::: "+res);
+	}		
+
+
+}}
+
+	

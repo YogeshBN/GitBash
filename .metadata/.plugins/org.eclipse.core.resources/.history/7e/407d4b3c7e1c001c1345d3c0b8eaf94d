@@ -1,0 +1,11 @@
+package assignment1;
+import java.io.File;
+import java.io.IOException;
+
+public class Act1 {
+	public static void main(String[] args) throws Exception
+	{
+	File f1=new File("C:\\Users\\lenovo\\Batch.txt");
+	f1.createNewFile();
+
+}}

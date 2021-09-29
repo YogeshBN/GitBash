@@ -1,0 +1,83 @@
+package maven1;
+
+/*
+ * Runnable interface::
+ * --one method called run()
+ */
+
+//child thread
+//class VendorThread extends Generics1 implements Runnable //valid
+class VendorThread  implements Runnable//valid::inheriting another class is possible!
+{
+	@Override
+	public void run() 
+	{
+		System.out.println("Child Thread Name:: "+Thread.currentThread().getName());
+		try
+		{
+			for(int i=0;i<5;i++)
+			{
+				//temporarily suspending vendor thread for every 2 seconds
+			//sleep method takes milliseconds argument
+			Thread.sleep(2000);//2 seconds
+			System.out.println("Vendor Child Thread: "+i + " "+Thread.currentThread().getName());
+			}
+		}
+		catch(InterruptedException e)//checked exception
+		{
+			System.out.println(e);
+		}
+		System.out.println("Vendor thread enters into DEAD state!");
+		System.out.println("Vendor thread completed!!!");	
+	}
+}//thread class over
+
+public class Threadrunnabledemo
+{
+	/*
+	 * EXECUTION ORDER::
+	 * MAIN THREAD(START)
+	 * CHILD THREAD
+	 * MAIN THREAD(END)
+	 */
+	public static void main(String[] args) 
+	{
+		VendorThread vt1=new VendorThread();
+		//USER DEFINED THREADS ARE GIVEN AS THREAD-0,THREAD-1...
+		Thread obj=new Thread(vt1);//COMPLETE CHILD THREAD OBJECT
+		Thread obj1=new Thread(vt1);//COMPLETE CHILD THREAD OBJECT
+
+		System.out.println("1st Thread alive?? "+obj.isAlive());
+		System.out.println("2nd Thread alive?? "+obj1.isAlive());
+		
+		obj.setName("AddThread");
+		obj1.setName("DelThread");
+
+		obj.start();//start() internally calling run()!!!!!!!!!!!!!!!!!!
+		obj1.start();//start() internally calling run()!!!!!!!!!!!!!!!!!!
+		
+		//Only once you can start the thread!
+		//obj1.start();//invalid IllegalThreadStateException raised!
+				
+		System.out.println("1st Thread alive?? "+obj.isAlive());
+		System.out.println("2nd Thread alive?? "+obj1.isAlive());
+		System.out.println("Total number of Threads?? "+Thread.activeCount());
+
+		try
+		{
+			for(int i=0;i<5;i++)
+			{
+			Thread.sleep(4000);//every 4 seconds child thread will get invoked!
+			System.out.println("Main Thread:: "+i);
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		System.out.println("Main Thread completed!");
+
+
+
+	}
+}

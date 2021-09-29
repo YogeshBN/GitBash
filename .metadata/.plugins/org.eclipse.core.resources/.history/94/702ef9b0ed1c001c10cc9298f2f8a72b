@@ -1,0 +1,49 @@
+package assignment1;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Act2 {
+
+	public static void main(String[] args) throws Throwable  {
+		// TODO Auto-generated method stub
+		InputStreamReader obj=new InputStreamReader(System.in);
+		BufferedReader b1=new BufferedReader(obj);
+	
+		System.out.println("Regno::: ");
+		String i=b1.readLine();
+		
+		System.out.println("Name::: ");
+		String j=b1.readLine();
+                 
+                 System.out.println("Age::: ");
+		String k=b1.readLine();
+		
+
+		FileWriter fw=new FileWriter("C:\\Users\\lenovo\\Java File concept\\batch.txt",true);
+		BufferedWriter bw=new BufferedWriter(fw);
+		
+		bw.write(i);
+		bw.write(j);
+bw.write(k);		
+bw.close();
+		
+		FileReader fr=new FileReader("C:\\Users\\lenovo\\Java File concept\\batch.txt");
+		BufferedReader br=new BufferedReader(fr);	
+		String res;
+		
+		while((res=br.readLine())!=null)
+		{
+			System.out.println("After Read::: "+res);
+		}		
+
+		
+
+
+
+	}
+
+}

@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>mavenprojectdemo</groupId>
+  <artifactId>Firstdemo</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>Firstdemo</name>
+  <url>http://Multithreading:::
+
+The term thread is short for thread of execution
+
+A thread of execution is a sequence of instructions that is executed one after another in its own call
+stack
+
+A thread executes instructions one at a time; the thread must execute and finish the current
+instruction before moving on to the next one
+
+From a developer’s perspective an application begins with 1 main thread that is usually started when
+the public static void main(String[] args ) method is called
+
+Concurrency in Java::::
+
+The most common way of implementing concurrency in a Java application is through multiple threads
+
+Java by nature is multithreaded as all applications have several background threads running in
+addition to the application code
+
+Each thread can create and start new threads
+
+The application terminates when the main thread and all application created threads finish execution
+
+Multiple threaded applications make use of thread switching and scheduling that allow multiple
+threads to make use of the system’s resources
+
+The actual algorithm for thread scheduling depends heavily on the native operating system
+
+Basic Concepts:::
+
+The application often has very little control in determining the behavior of threads
+
+The application can influence the behavior of threads, but it cannot have direct control
+
+A variety of factors are taken in by the thread scheduler in determining which threads to execute, such
+as:
+
+Availability of a CPU resources
+
+Activity or inactivity of the thread
+
+Designated priority
+
+Application logic should never be designed to rely on predicting thread behavior
+
+After a thread is caused to block, wait or sleep, it returns to the runnable state not the running state,
+making it impossible to determine exactly when it will run again.
+
+Thread Priority:::
+
+Normally a thread with higher priority will be scheduled to run before a thread with a lower priority,
+but this is not always the case
+
+The scheduler may choose to run a lower priority thread for efficiency reasons or if the thread itself
+causes the scheduler to choose another thread
+
+Implementation of thread priority varies depending on the underlying platform, and thus should
+never be considered as a factor when designing application logic
+
+=================================================================================================
+package myprograms;
+/*
+MULTITHREADING in Java is a process of executing two or more threads 
+simultaneously to maximum utilization of CPU. 
+Multithreaded applications execute two or more threads run concurrently. 
+Hence, it is also known as Concurrency in Java. 
+Each thread runs parallel to each other.
+
+Advantages::
+--many operations run together,so saves time
+--threads are independent so it doesnt affect other threads if an 
+exception occurs in a single thread!
+--thread is lightweight
+--thread share the same memory space.
+ */
+
+//current thread is called main thread(default thread)
+
+/*
+ * 2 ways TO CREATE A CHILD THREAD::
+ * --implements Runnable interface(run method)
+ * --extends Thread class
+ */
+
+public class ThreadPropertiesDemo 
+{
+	//ALWAYS MAIN THREAD IS RUNNING MODE!
+	public static void main(String[] args)  //parent thread for all child thread
+	{
+		Thread t=Thread.currentThread();
+		System.out.println("Current thread name:: "+t);//main
+		System.out.println("Current thread name:: "+t.getName());//main
+		t.setName("RenaultThread");
+		System.out.println("Current thread name:: "+t.getName());
+		System.out.println("Current thread name:: "+t);		
+		System.out.println("Current Thread priority:: "+t.getPriority());//5->default priority main thread
+		System.out.println("Active Threads? ::"+Thread.activeCount());
+		System.out.println("Thread alive?? "+t.isAlive());
+		try
+		{
+			for(int i=0;i<5;i++)
+			{
+				//temporarily suspending main thread for every 4 seconds
+				//sleep method takes milliseconds argument
+				Thread.sleep(4000);//4 seconds=4000 milliseconds
+				System.out.println(i);
+			}
+		}
+		catch(InterruptedException e)//checked exception
+		{
+			System.out.println(e);
+		}
+		System.out.println("Main thread continues!!!");
+
+		
+	}
+}
+================================================================================================
+package myprograms;
+/*
+ * Runnable interface::
+ * --one method called run()
+ */
+
+//child thread
+//class VendorThread extends Generics1 implements Runnable //valid
+class VendorThread  implements Runnable//valid::inheriting another class is possible!
+{
+	@Override
+	public void run() 
+	{
+		System.out.println("Child Thread Name:: "+Thread.currentThread().getName());
+		try
+		{
+			for(int i=0;i<5;i++)
+			{
+				//temporarily suspending vendor thread for every 2 seconds
+			//sleep method takes milliseconds argument
+			Thread.sleep(2000);//2 seconds
+			System.out.println("Vendor Child Thread: "+i + " "+Thread.currentThread().getName());
+			}
+		}
+		catch(InterruptedException e)//checked exception
+		{
+			System.out.println(e);
+		}
+		System.out.println("Vendor thread enters into DEAD state!");
+		System.out.println("Vendor thread completed!!!");	
+	}
+}//thread class over
+
+public class ThreadRunnableDemo
+{
+	/*
+	 * EXECUTION ORDER::
+	 * MAIN THREAD(START)
+	 * CHILD THREAD
+	 * MAIN THREAD(END)
+	 */
+	public static void main(String[] args) 
+	{
+		VendorThread vt1=new VendorThread();
+		//USER DEFINED THREADS ARE GIVEN AS THREAD-0,THREAD-1...
+		Thread obj=new Thread(vt1);//COMPLETE CHILD THREAD OBJECT
+		Thread obj1=new Thread(vt1);//COMPLETE CHILD THREAD OBJECT
+
+		System.out.println("1st Thread alive?? "+obj.isAlive());
+		System.out.println("2nd Thread alive?? "+obj1.isAlive());
+		
+		obj.setName("AddThread");
+		obj1.setName("DelThread");
+
+		obj.start();//start() internally calling run()!!!!!!!!!!!!!!!!!!
+		obj1.start();//start() internally calling run()!!!!!!!!!!!!!!!!!!
+		
+		//Only once you can start the thread!
+		//obj1.start();//invalid IllegalThreadStateException raised!
+				
+		System.out.println("1st Thread alive?? "+obj.isAlive());
+		System.out.println("2nd Thread alive?? "+obj1.isAlive());
+		System.out.println("Total number of Threads?? "+Thread.activeCount());
+
+		try
+		{
+			for(int i=0;i<5;i++)
+			{
+			Thread.sleep(4000);//every 4 seconds child thread will get invoked!
+			System.out.println("Main Thread:: "+i);
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		System.out.println("Main Thread completed!");
+
+
+
+	}
+}
+==========================================================================================
+package myprograms;
+
+//child thread
+//this class cannot inherit any other classes!!!!!!!!!!!!!
+class VendorThread1 extends Thread
+{
+	@Override
+	public void run() 
+	{
+		System.out.println("Child Thread Name:: "+Thread.currentThread().getName());
+		try
+		{
+			for(int i=0;i<5;i++)
+			{
+				//temporarily suspending vendor thread for every 2 seconds
+			//sleep method takes milliseconds argument
+			Thread.sleep(2000);//2 seconds
+			System.out.println("Vendor Child Thread: "+i + " "+Thread.currentThread().getName());
+			}
+		}
+		catch(InterruptedException e)//checked exception
+		{
+			System.out.println(e);
+		}
+		System.out.println("Vendor thread enters into DEAD state!");
+		System.out.println("Vendor thread completed!!!");	
+	}
+
+}
+public class ThreadInheritsDemo {
+
+	public static void main(String[] args) 
+	{
+		//SEPERATE THREAD OBJECT NOT REQUIRED LIKE PREVIOUS PROGRAM bcos VendorThread1 already inherits Thread!
+		VendorThread1 obj=new VendorThread1();
+		VendorThread1 obj1=new VendorThread1();
+		
+		System.out.println("1st Thread alive?? "+obj.isAlive());
+		System.out.println("2nd Thread alive?? "+obj1.isAlive());
+
+		obj.setName("AddThread");
+		obj1.setName("DelThread");
+		obj.start();//start() calling run()!!!!!!!!!!!!!!!!!!
+		obj1.start();
+		System.out.println("1st Thread alive?? "+obj.isAlive());
+		System.out.println("2nd Thread alive?? "+obj1.isAlive());
+		try
+		{
+			for(int i=0;i<5;i++)
+			{
+			Thread.sleep(4000);//4seconds
+			System.out.println("Main Thread:: "+i);
+			}
+		}
+		catch(InterruptedException e)
+		{
+			System.out.println(e);
+		}
+		System.out.println("Main Thread completed!");
+
+		
+
+		
+
+	}
+
+}
+==================================================================================================
+package myprograms;
+
+class ShopThread extends Thread
+{
+	@Override
+	public void run()
+	{
+		System.out.println("Current Thread Name:: "+Thread.currentThread().getName());	
+		try
+		{
+			for(int i=0;i<5;i++)
+			{
+				Thread.sleep(2000);//2 seconds
+				System.out.println("Shop Thread:: "+i + " "+Thread.currentThread().getName());
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		System.out.println("Shop Thread enters into DEAD state!");
+		System.out.println("Shop Thread Completed!");
+		}
+
+}
+public class ThreadJoiningDemo 
+{
+	public static void main(String[] args) throws Exception
+	{
+		ShopThread t1=new ShopThread();
+		ShopThread t2=new ShopThread();
+		ShopThread t3=new ShopThread();
+
+		System.out.println("Main Thread Running!");
+		t1.start();
+		t2.start();
+		t3.start();
+		/*
+		 * order:: 
+		 * main
+		 * child1,child2,..
+		 * main
+		 */
+		/*
+		 * join method::
+		 * it allows one thread(main thread) to wait until 
+		 * all the child threads to complete
+		 * its execution!
+		 */
+		
+		t1.join();//main thread waiting for the completion of all child threads!
+		t2.join();
+		t3.join();
+
+		//NO SLEEP METHOD IN MAIN THREAD
+		System.out.println("Main Thread waiting for child threads!!");
+		System.out.println("Main Thread completed!");
+
+	}
+}
+============================================================================================================
+package myprograms;
+
+/*
+ * Thread Priorities::
+ * --Thread.MIN_PRIORITY(1)
+ * Thread.MAX_PRIORITY(10)
+ * Thread.NORM_PRIORITY(5)--DEFAULT PRIORITY FOR MAIN THREAD
+ */
+class TestingThread implements Runnable
+{
+	@Override
+	public void run()
+	{
+		System.out.println("Current Thread Name:: "+Thread.currentThread().getName());	
+		try
+		{
+			for(int i=0;i<3;i++)
+			{
+				Thread.sleep(2000);//2 seconds
+				System.out.println("Child Thread:: "+i + " "+Thread.currentThread().getName());
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		System.out.println("Child Thread enters into DEAD state!" +Thread.currentThread().getName());
+		System.out.println("Child Thread Completed!");
+		}
+
+}
+public class ThreadPriorities {
+
+	public static void main(String[] args)throws Exception
+	{
+		Thread t1=new Thread(new TestingThread());
+		Thread t2=new Thread(new TestingThread());
+		Thread t3=new Thread(new TestingThread());
+
+		/*
+		 * In most cases, thread schedular schedules the threads according to their priority 
+		 * (known as preemptive scheduling). 
+		 * But it is not guaranteed because it depends on JVM specification that which scheduling it chooses.
+		 */
+
+		t1.setName("Add");//2
+		t1.setPriority(6);
+		t1.start();
+		//t1.setPriority(61);//IllegalArgumentException		
+		
+		t2.setName("Delete");//3
+		t2.setPriority(Thread.NORM_PRIORITY-2);//5-2=3
+		t2.start();
+
+		t3.setName("Update");//1
+		t3.setPriority(Thread.NORM_PRIORITY+4);//5+4=9
+		t3.start();
+
+		t1.join();
+		t2.join();
+		t3.join();
+
+		System.out.println("Main Thread completed!");
+
+	}
+
+}
+=================================================================================================================
+package myprograms;
+
+/*
+Synchronization::
+--Synchronization is a process of controlling the access of shared resources
+ by the multiple threads in such a manner that only one thread can access a 
+ particular resource at a time.
+--Once a thread enters a synchronized code, it acquires a mutex(lock). 
+It is released only when the thread leaves the synchronized code.
+
+--In non synchronized multithreaded application, it is possible for 
+one thread to modify a shared object while another thread is 
+in the process of using or updating the object’s value. 
+
+--Synchronization prevents such type of data corruption which may otherwise
+ lead to dirty reads and significant errors.
+
+--A deadlock occurs when two or more threads wait for each other to
+ release the lock on a particular object. Synchronization will prevent
+  deadlock.
+
+--Synchronized methods are also called thread-safe methods.
+Generally critical sections of the code are usually marked with 
+synchronized keyword.
+
+--Only methods (or blocks) can be synchronized, 
+Classes and variable cannot be synchronized.
+      
+--Each object has just one lock.
+--All methods in a class need not to be synchronized. 
+A class can have both synchronized and non-synchronized methods.
+--Constructors cannot be synchronized 
+ */
+/*
+--Uses of synchronization:
+1.to prevent thread interruption
+2.to prevent inconsistency problem
+*/
+//ex: Thread safe (contains synchronized methods): String Buffer,HashTable,Vector(List interface)
+class Parentheses
+{
+	//void display(String s)//non synchronized METHOD
+	//METHOD LEVEL SYNCHRONIZATION
+	synchronized void display(String s)//synchronized
+	{
+		System.out.print ("(" + s);//open the parantheses
+	   	try 
+		{
+	     		Thread.sleep (4000);//4 seconds
+	System.out.println("\n\t Current Thread: "
++Thread.currentThread().getName()+ " "+Thread.currentThread().getPriority());
+	  	 }
+		 catch (InterruptedException e) 
+		{
+		        System.out.println ("Interrupted");
+		}
+		 System.out.println(")");//close the ()
+	}
+}
+//child thread 
+class MyThread implements Runnable
+{
+	Parentheses p1;
+	String s1;
+
+		public MyThread(Parentheses p1, String s1)
+		{
+		super();
+		this.p1 = p1;
+		this.s1 = s1;
+		}
+
+		@Override
+		public void run() 
+		{
+			p1.display(s1);//calls CLASS Parantheses 
+	
+		}
+}
+public class ThreadSynchronization 
+{
+
+	public static void main(String[] args)throws Exception
+	{
+		Parentheses pobj=new Parentheses();
+		Thread t1=new Thread(new MyThread(pobj,"India"));
+		Thread t2=new Thread(new MyThread(pobj,"US"));
+		Thread t3=new Thread(new MyThread(pobj,"UK"));
+		Thread t4=new Thread(new MyThread(pobj,"Australia"));
+		
+		t1.setName("First Thread");
+		t1.start();//run() method called automatically
+		t2.setName("Second Thread");
+		t2.start();
+		t3.setName("Third Thread");
+		t3.start();
+		t4.setName("Fourth Thread");
+		t4.start();
+		t1.join();
+		t2.join();
+		t3.join();
+		t4.join();
+		System.out.println("Main Thread Over!");
+	}
+}
+===================================================================================================================
+JUNIT::::::::::::::::::::
+
+
+package mytesting;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+/*
+ * JUNIT is an open-source testing framework for java programmers. 
+ * The java programmer can create test cases and test his/her own code.
+
+It is one of the unit testing framework. Current version is junit 4.
+ 
+ To perform unit testing, we need to create test cases. 
+ The unit test case is a code which ensures that the program logic works as expected.
+
+The org.junit package contains many interfaces and classes for junit testing such as Assert, Test, Before, 
+After etc.
+
+Types of unit testing:::::::::::::::
+There are two ways to perform unit testing: 1) manual testing 2) automated testing.
+
+1) Manual Testing
+If you execute the test cases manually without any tool support, it is known as manual testing. 
+It is time consuming and less reliable.
+
+2) Automated Testing
+If you execute the test cases by tool support, it is known as automated testing. It is fast and more reliable.
+
+The Junit 4.x framework is annotation based!!!!!!!!!!!!
+
+@Test annotation specifies that method is the test case method.
+ */
+/*
+ * org.hamcrest.core_1.3.0.v201303031735.jar  & junit-4.12.jar required!!!!!!!!!!!!!!!!!!! add to the buildpath. 
+ */
+
+//NO PSVM!
+public class AssertionTestDemo 
+{
+	@Test
+	public void mytest1()
+	{
+		String obj1="junit";//String pool memory
+		String obj2="junit";//String pool memory
+		String obj3=new  String("test");//Heap
+		String obj4="test";//Pool
+		String obj5=null;
+		int var1=1;
+		int var2=2;
+		int[] arithmetic1= {1,2,3,4,5};
+		int[] arithmetic2= {1,2,3,4};
+		
+		//The assertEquals() method compares two objects for equality,
+		//using their equals() method. 
+
+		assertEquals(obj3,obj4);
+		assertEquals(obj1,obj2);
+
+		//Check if two object references 
+		//point to the same object TYPE
+		
+		//assertSame(obj3,obj4);//failure  bcos one is heap and another one is pool!
+		assertSame(obj1,obj2);
+
+		//Check if two object references 
+		//not point to the same object type
+		assertNotSame(obj3,obj4);//different memory returns true
+		//assertNotSame(obj1,obj2);//same memory returns false
+		
+		//Check that an object isn't null
+		assertNotNull(obj1);
+		
+		//Check that an object is null
+			assertNull(obj5);
+			
+			//Check that a condition is true
+			assertTrue(var1 < var2);
+
+			//Check that a condition is false
+			assertFalse(var1 > var2);//1>2
+			
+			// Check whether two arrays are 
+			//equal to each other.
+			assertArrayEquals(arithmetic1,arithmetic2);
+			
+	}
+}
+
+
+============================================================================================
+package mytesting;
+
+public class MyCalc 
+{
+	public int sum(int x,int y)
+	{
+		return x+y;
+	}
+}
+//Test case class=>right click=>MyCalc.java=>new=>Java=>junit=>
+//junit test case=>junit 4 version=>select all lifecycle annotations
+===============================================================================================
+package mytesting;
+
+public class Student {
+	int sid;
+	String sname;
+	public int getSid() {
+		return sid;
+	}
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+
+
+}
+=================================================================================================
+package mytesting;
+
+public class Division 
+{
+	int num1,num2;
+
+	public Division(int num1, int num2)
+	{
+		super();
+		this.num1 = num1;
+		this.num2 = num2;
+	}
+	public int divide()
+	{
+		return num1/num2;
+	}
+
+}
+==========================================================================================
+package mytesting;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+/*
+ * The @Ignore test annotation is used to ignore particular tests or group of tests in order to skip the build failure.
+
+@Ignore annotation can be used in two scenarios as given below:
+
+    If you want to ignore a test method, use @Ignore along with @Test annotation.
+    If you want to ignore all the tests of class, use @Ignore annotation at the class level.
+
+ */
+//@Ignore//ignore all test cases!
+public class MyCalcTest 
+{
+
+	int first;
+	int second;
+	int expectedresult;
+	MyCalc obj1;
+
+	/*
+	 @BeforeClass annotation specifies that method will be invoked only once, before starting all the tests.
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception
+	{
+		System.out.println("@RunOnceBeforeClass-Program Started");
+	}
+	//@AfterClass annotation specifies that method will be invoked only once, after finishing all the tests.
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		System.out.println("@RunOnceAfterClass-Program Ended");
+	}
+	//@Before annotation specifies that method will be invoked before each test case!
+	@Before
+	public void setUp() throws Exception {
+		System.out.println("@Before: start of the test case");
+		obj1=new MyCalc();
+		expectedresult=obj1.sum(12, 12);//24
+		System.out.println("@BeforeExpected:: "+expectedresult);
+	}
+
+	//@After annotation specifies that method will be invoked after each test.
+	@After
+	public void tearDown() throws Exception {
+		System.out.println("@After: End of the test case");
+	}
+
+	//first test case!!!!!!!!!!!!!!!!!!!!
+	@Test//Testing the MyCalc.java
+	public void test()//passed
+	{
+		System.out.println("My First Test Case!");
+		MyCalc obj2=new MyCalc();
+		assertEquals(expectedresult,obj2.sum(12, 12));//24,24=>success
+		System.out.println("@Test(Expectedresult):: "+expectedresult);
+			
+	}
+	//second test case
+	@Test
+	public void test1()//passed
+	{
+		System.out.println("Student Test Case!");
+		Student s1=new Student();
+		s1.setSid(1001);
+		s1.setSname("Thananya");
+		//expectedresult,actualresult
+		assertEquals(1001,s1.getSid());
+		assertEquals("Thananya",s1.getSname());	
+	}
+	//third test case
+	Division obj=new Division(10,2);
+	Division obj4=new Division(10,0);
+	@Test//
+	public void test4()//passed
+	{
+		System.out.println("Division Test Case!");
+		assertEquals(5,obj.divide());//5,5
+		//assertEquals(5,obj4.divide());//failed
+	}
+	//fourth test case
+	@Test(expected=ArithmeticException.class)
+	public void test5()//failed
+	{
+		System.out.println("Division Another Test Case!");
+		//assertEquals(5,obj.divide());//failed
+		assertEquals(5,obj4.divide());//passed
+		}
+//	@Ignore//this test case alone ignored!
+	//fifth test case
+			@Test(expected=ArithmeticException.class)
+			public void test6()//failed
+			{
+				throw new NullPointerException();
+			}
+
+
+}
+========================================================================================================</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.7.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.7.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>

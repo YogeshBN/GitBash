@@ -1,0 +1,36 @@
+package assignment1;
+public class Act28_4 
+	{
+	
+		public static void main(String[] args)  
+		{
+			Thread t=Thread.currentThread();
+			t.setName("PracticeThread");
+			System.out.println("Current thread name:: "+t.getName());		
+			try
+			{
+				for(int i=0;i<5;i++)
+				{
+					
+					Thread.sleep(2000);
+					System.out.println(i);
+				
+				if(i%2==0)
+				{
+			    System.out.println(i*i);		
+				}
+				else			
+				{
+					 System.out.println(i*i*i);		
+				}
+			}
+			}
+			catch(InterruptedException e)
+			{
+				System.out.println(e);
+			}
+			System.out.println("This is the output");
+
+			
+		}
+	}
